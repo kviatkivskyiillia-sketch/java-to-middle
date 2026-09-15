@@ -6,39 +6,34 @@ public class Fourth {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Введіть символ:");
-        char targetChar = scan.nextLine().charAt(0);
-
         System.out.println("Введіть текст:");
         String text = scan.nextLine();
 
         String[] words = text.split("[ ,.:;?!]+");
 
-        System.out.println("Знайдені слова та кількість їхніх повторень:");
+        System.out.println("Результат:");
 
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
+        StringBuilder result = new StringBuilder();
 
-            if (word.indexOf(targetChar) != -1) {
+        for (String word : words) {
+            if (word.isEmpty()) {
+                continue;
+            }
 
-                boolean alreadyPrinted = false;
-                for (int j = 0; j < i; j++) {
-                    if (words[j].equalsIgnoreCase(word)) {
-                        alreadyPrinted = true;
-                        break;
-                    }
-                }
+            char firstChar = word.charAt(0);
+            StringBuilder processedWord = new StringBuilder();
+            processedWord.append(firstChar);
 
-                if (!alreadyPrinted) {
-                    int count = 0;
-                    for (int k = 0; k < words.length; k++) {
-                        if (words[k].equalsIgnoreCase(word)) {
-                            count++;
-                        }
-                    }
-                    System.out.println(word + " — " + count + " рази");
+            for (int i = 1; i < word.length(); i++) {
+                char current = word.charAt(i);
+                if (current != firstChar) {
+                    processedWord.append(current);
                 }
             }
+
+            result.append(processedWord).append(" ");
         }
+
+        System.out.println(result.toString().trim());
     }
 }
