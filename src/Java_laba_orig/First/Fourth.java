@@ -1,39 +1,37 @@
 package Java_laba_orig.First;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Fourth {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Введіть символ:");
+        char targetChar = in.nextLine().charAt(0);
 
         System.out.println("Введіть текст:");
-        String text = scan.nextLine();
-
+        String text = in.nextLine();
         String[] words = text.split("[ ,.:;?!]+");
 
-        System.out.println("Результат:");
+        //  Map для підрахунку кількості повторень кожного слова
+        Map<String, Integer> wordCounts = new HashMap<>();
 
-        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
 
-        for (String word : words) {
-            if (word.isEmpty()) {
-                continue;
+            if (word.indexOf(targetChar) != -1) {
+
+                wordCounts.put(word, wordCounts.getOrDefault(word, 0) + 1);
             }
-
-            char firstChar = word.charAt(0);
-            StringBuilder processedWord = new StringBuilder();
-            processedWord.append(firstChar);
-
-            for (int i = 1; i < word.length(); i++) {
-                char current = word.charAt(i);
-                if (current != firstChar) {
-                    processedWord.append(current);
-                }
-            }
-
-            result.append(processedWord).append(" ");
         }
 
-        System.out.println(result.toString().trim());
+        System.out.println("Знайдені слова та кількість їхніх повторень:");
+        for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
+            System.out.println(entry.getKey() + " — " + entry.getValue() + " рази");
+        }
+
+        in.close();
     }
 }
